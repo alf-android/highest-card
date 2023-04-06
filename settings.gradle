@@ -13,4 +13,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "HighestCard"
-include ':app'
+include(":app")
+include(":usecases")
+include(":data")
+include(":domain")
