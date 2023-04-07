@@ -34,9 +34,10 @@ android {
 
 dependencies {
 
-    implementation(project(":data"))
-    implementation(project(":domain"))
-    implementation(project(":common"))
+    api("androidx.core:core-ktx:1.7.0") //It needs API 33
+
+    api("io.insert-koin:koin-android:${rootProject.extra["koinVersion"]}")
+    api("io.insert-koin:koin-androidx-compose:${rootProject.extra["koinVersion"]}")
 
     testImplementation("junit:junit:${rootProject.extra["junitVersion"]}")
     androidTestImplementation("androidx.test.ext:junit:${rootProject.extra["testJunitVersion"]}")

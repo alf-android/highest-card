@@ -57,7 +57,7 @@ dependencies {
     implementation(project(":usecases"))
     implementation(project(":data"))
     implementation(project(":domain"))
-    //implementation(project(":common"))
+    implementation(project(":common"))
 
     implementation("androidx.compose.material3:material3:${rootProject.extra["composeMaterial3Version"]}")
 //    implementation("androidx.compose.material3:material3-window-size-class:1.0.1")
