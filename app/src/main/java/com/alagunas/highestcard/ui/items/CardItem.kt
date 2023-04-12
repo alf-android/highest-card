@@ -1,6 +1,7 @@
 package com.alagunas.highestcard.ui.items
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material3.Text
@@ -8,18 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cardShape
-import com.alagunas.domain.model.Card
 import com.alagunas.domain.model.CardFaceName
-import com.alagunas.domain.model.CardSuit
+import com.alagunas.highestcard.R
 
 @Composable
-fun CardItem(card: Card) {
+fun CardItem(card: CardUI?) {
 
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Text(text = "Dealed card:", modifier = Modifier.padding(5.dp))
+    Column {
         Card(
             modifier = Modifier
                 .width(120.dp)
@@ -33,10 +35,25 @@ fun CardItem(card: Card) {
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                Text(
-                    text = "${card.faceName.show} ${card.suit}",
-                    modifier = Modifier.align(Alignment.Center)
-                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                        .wrapContentHeight(Alignment.CenterVertically)
+                ) {
+                    card?.let {
+                        Text(
+                            text = it.faceName,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        val painter = painterResource(id = it.suit)
+                        Image(painter = painter, contentDescription = null)
+                    }
+                }
+
             }
         }
     }
@@ -46,5 +63,5 @@ fun CardItem(card: Card) {
 @Composable
 @Preview
 fun CardPreview() {
-    CardItem(Card(CardFaceName.QUEEN, CardSuit.HEARTS))
+    CardItem(CardUI(CardFaceName.QUEEN.name, R.drawable.spades))
 }

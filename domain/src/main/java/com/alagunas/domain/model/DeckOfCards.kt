@@ -3,9 +3,8 @@ package com.alagunas.domain.model
 class DeckOfCards {
     private val suits = CardSuit.values()
     private val faceNames = CardFaceName.values()
-    private val deck: MutableList<Card> = mutableListOf()
-    val pile1: List<Card>
-    val pile2: List<Card>
+    val deck: MutableList<Card> = mutableListOf()
+
 
     init {
         suits.forEach { suit ->
@@ -14,8 +13,8 @@ class DeckOfCards {
             }
         }
         deck.shuffle()
-        val n = deck.size
+        /*val n = deck.size
         pile1 = deck.subList(0, (n + 1) / 2)
-        pile2 = deck.subList((n + 1) / 2, n)
+        pile2 = deck.subList((n + 1) / 2, n)*/
     }
 }

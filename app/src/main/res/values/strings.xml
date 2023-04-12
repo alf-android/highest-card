@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HighestCard</string>
+    <string name="app_name">War of suits</string>
     <string name="play">PLAY!</string>
     <string name="historial">HISTORIAL</string>
     <string name="reset_game">Reset Game</string>

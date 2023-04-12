@@ -1,10 +1,10 @@
 package com.alagunas.domain.model
 
 data class Player(
-    private var pile: List<Card>,
-    val wastePile: MutableList<Card> = mutableListOf(),
-    val wins: Int = 0,
-    val winner: Boolean = false
+    var pile: List<Card>,
+    val winnerPile: MutableList<Card> = mutableListOf(),
+    var wins: Int = 0,
+    var winner: Boolean = false
 ) {
 
     fun getPileSize(): Int {
