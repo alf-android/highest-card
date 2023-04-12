@@ -5,11 +5,16 @@ import com.alagunas.domain.model.Card
 import com.alagunas.domain.model.Player
 import com.alagunas.highestcard.ui.items.CardUI
 import com.alagunas.highestcard.ui.items.toCardUI
+import com.alagunas.usecases.game.DealTopUseCase
 import com.alagunas.usecases.game.StartGameUseCase
 import com.alagunas.usecases.game.WinRoundUseCase
 import kotlinx.coroutines.flow.*
 
-class GameViewModel(val startGameUseCase: StartGameUseCase) : ViewModel() {
+class GameViewModel(
+    private val startGameUseCase: StartGameUseCase,
+    private val winRoundUseCase: WinRoundUseCase,
+    private val dealTopUseCase: DealTopUseCase
+) : ViewModel() {
 
     private val TAG = GameViewModel::class.java.simpleName
 
@@ -55,10 +60,10 @@ class GameViewModel(val startGameUseCase: StartGameUseCase) : ViewModel() {
     }
 
     fun nextRound() {
-        if (playerA != null && playerB != null){
+        if (playerA != null && playerB != null) {
             if (playerA!!.getPileSize() > 0 && playerB!!.getPileSize() > 0) {
-                val dealedCardA = playerA!!.dealTop()
-                val dealedCardB = playerB!!.dealTop()
+                val dealedCardA = dealTopUseCase(playerA!!)
+                val dealedCardB = dealTopUseCase(playerB!!)
 
                 _showCardPlayerA.value = dealedCardA.toCardUI()
                 _showCardPlayerB.value = dealedCardB.toCardUI()
@@ -66,15 +71,17 @@ class GameViewModel(val startGameUseCase: StartGameUseCase) : ViewModel() {
                 _showPilePlayerB.value = playerB!!.getPileSize()
 
                 if (isPlayerAWinner(dealedCardA, dealedCardB)) {
+                    winRoundUseCase(playerA!!, listOf(dealedCardA, dealedCardB))
                     _showWinsPlayerA.value = showWinsPlayerA.value + 1
                 } else {
+                    winRoundUseCase(playerB!!, listOf(dealedCardA, dealedCardB))
                     _showWinsPlayerB.value = showWinsPlayerB.value + 1
                 }
             }
         }
-
     }
 
+    //TODO: check value of suits in case of draw
     private fun isPlayerAWinner(cardPlayerA: Card, cardPlayerB: Card) =
         cardPlayerA.faceName.value > cardPlayerB.faceName.value
 }
