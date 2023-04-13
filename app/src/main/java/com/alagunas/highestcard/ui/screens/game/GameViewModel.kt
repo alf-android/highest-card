@@ -3,12 +3,14 @@ package com.alagunas.highestcard.ui.screens.game
 import androidx.lifecycle.ViewModel
 import com.alagunas.domain.model.Card
 import com.alagunas.domain.model.Player
+import com.alagunas.highestcard.R
 import com.alagunas.highestcard.ui.items.CardUI
 import com.alagunas.highestcard.ui.items.toCardUI
 import com.alagunas.usecases.game.DealTopUseCase
 import com.alagunas.usecases.game.StartGameUseCase
 import com.alagunas.usecases.game.WinRoundUseCase
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class GameViewModel(
     private val startGameUseCase: StartGameUseCase,
@@ -34,6 +36,11 @@ class GameViewModel(
     private val _showWinsPlayerB: MutableStateFlow<Int> = MutableStateFlow(0)
     val showWinsPlayerB = _showWinsPlayerB.asStateFlow()
 
+    private val _showSuitsOrder: MutableStateFlow<List<Int>> = MutableStateFlow(
+        listOf()
+    )
+    val showSuitsOrder = _showSuitsOrder.asStateFlow()
+
 
     private var playerA: Player? = null
     private var playerB: Player? = null
@@ -46,6 +53,14 @@ class GameViewModel(
         val players = startGameUseCase(Unit)
         playerA = players[0]
         playerB = players[1]
+        _showPilePlayerA.value = playerA?.pile?.size
+        _showPilePlayerB.value = playerB?.pile?.size
+        _showSuitsOrder.value = listOf(
+            R.drawable.spades,
+            R.drawable.hearts,
+            R.drawable.clubs,
+            R.drawable.diamonds
+        )
     }
 
     fun resetGame() {
@@ -61,14 +76,14 @@ class GameViewModel(
 
     fun nextRound() {
         if (playerA != null && playerB != null) {
-            if (playerA!!.getPileSize() > 0 && playerB!!.getPileSize() > 0) {
+            if (playerA!!.pile.isNotEmpty() && playerB!!.pile.isNotEmpty()) {
                 val dealedCardA = dealTopUseCase(playerA!!)
                 val dealedCardB = dealTopUseCase(playerB!!)
 
                 _showCardPlayerA.value = dealedCardA.toCardUI()
                 _showCardPlayerB.value = dealedCardB.toCardUI()
-                _showPilePlayerA.value = playerA!!.getPileSize()
-                _showPilePlayerB.value = playerB!!.getPileSize()
+                _showPilePlayerA.value = playerA!!.pile.size
+                _showPilePlayerB.value = playerB!!.pile.size
 
                 if (isPlayerAWinner(dealedCardA, dealedCardB)) {
                     winRoundUseCase(playerA!!, listOf(dealedCardA, dealedCardB))

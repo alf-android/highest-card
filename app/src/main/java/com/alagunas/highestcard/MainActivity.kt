@@ -47,7 +47,7 @@ fun HighestCardNavHost(navController: NavHostController) {
             MainScreen(navController)
         }
         composable(route = "newgame") {
-            GameScreen(navController)
+            GameScreen()
         }
     }
 }

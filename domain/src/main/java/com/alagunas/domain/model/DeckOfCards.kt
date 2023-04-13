@@ -5,7 +5,6 @@ class DeckOfCards {
     private val faceNames = CardFaceName.values()
     val deck: MutableList<Card> = mutableListOf()
 
-
     init {
         suits.forEach { suit ->
             faceNames.forEach { faceName ->
@@ -13,8 +12,5 @@ class DeckOfCards {
             }
         }
         deck.shuffle()
-        /*val n = deck.size
-        pile1 = deck.subList(0, (n + 1) / 2)
-        pile2 = deck.subList((n + 1) / 2, n)*/
     }
 }
