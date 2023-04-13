@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HighestCard</string>
+    <string name="app_name">War of suits</string>
     <string name="play">PLAY!</string>
     <string name="historial">HISTORIAL</string>
     <string name="reset_game">Reset Game</string>
@@ -7,4 +7,6 @@
     <string name="winner">WINNER!</string>
     <string name="win">WIN!</string>
     <string name="lose">LOSE!</string>
+    <string name="professor_x">Professor X</string>
+    <string name="magneto">Magneto</string>
 </resources>
