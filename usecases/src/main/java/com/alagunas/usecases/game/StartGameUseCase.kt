@@ -11,8 +11,8 @@ class StartGameUseCase: UseCase<Unit, List<Player>> {
         val n = deckOfCards.deck.size
         val pile1 = deckOfCards.deck.subList(0, (n + 1) / 2)
         val pile2 = deckOfCards.deck.subList((n + 1) / 2, n)
-        val playerA = Player(pile1)
-        val playerB = Player(pile2)
+        val playerA = Player(pile = pile1)
+        val playerB = Player(pile = pile2)
         return listOf(playerA, playerB)
     }
 }
