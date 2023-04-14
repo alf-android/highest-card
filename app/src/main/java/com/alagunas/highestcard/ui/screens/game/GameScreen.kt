@@ -35,8 +35,8 @@ fun GameScreen(
     val cardPlayerA by viewModel.showCardPlayerA.collectAsState()
     val cardPlayerB by viewModel.showCardPlayerB.collectAsState()
 
-    val winsPlayerA by viewModel.showWinsPlayerA.collectAsState()
-    val winsPlayerB by viewModel.showWinsPlayerB.collectAsState()
+    val discardPilePlayerA by viewModel.showDiscardPilePlayerA.collectAsState()
+    val discardPilePlayerB by viewModel.showDiscardPilePlayerB.collectAsState()
 
     val suitsOrder by viewModel.showSuitsOrder.collectAsState()
 
@@ -151,7 +151,7 @@ fun GameScreen(
                         ) {
                             Text(text = "winner Pile:", color = colorResource(id = R.color.white))
                             Text(
-                                text = "${(winsPlayerA * 2)} cards",
+                                text = "$discardPilePlayerA cards",
                                 color = colorResource(id = R.color.white)
                             )
                         }
@@ -165,7 +165,7 @@ fun GameScreen(
                         ) {
                             Text(text = "winner Pile:", color = colorResource(id = R.color.white))
                             Text(
-                                text = "${(winsPlayerB * 2)} cards",
+                                text = "$discardPilePlayerB cards",
                                 color = colorResource(id = R.color.white)
                             )
                         }

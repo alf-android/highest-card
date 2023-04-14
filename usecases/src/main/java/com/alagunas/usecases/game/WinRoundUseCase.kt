@@ -1,13 +1,9 @@
 package com.alagunas.usecases.game
 
-import com.alagunas.domain.model.Card
 import com.alagunas.domain.model.Player
 
 class WinRoundUseCase {
 
-    operator fun invoke(player: Player, winnedCards: List<Card>) {
-        player.wins++
-        player.winnerPile.addAll(winnedCards)
-        player.winner = true
-    }
+    operator fun invoke(player: Player): Player =
+        player.copy(wins = player.wins + 1, discardPile = player.discardPile + 2)
 }

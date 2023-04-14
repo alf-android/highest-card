@@ -1,8 +1,7 @@
 package com.alagunas.domain.model
 
 data class Player(
-    var pile: List<Card>,
-    val winnerPile: MutableList<Card> = mutableListOf(),
-    var wins: Int = 0,
-    var winner: Boolean = false
+    val pile: List<Card> = listOf(),
+    val discardPile: Int = 0,
+    val wins: Int = 0
 )
