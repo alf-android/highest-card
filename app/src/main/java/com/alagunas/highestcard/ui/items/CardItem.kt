@@ -21,10 +21,10 @@ import com.alagunas.domain.model.CardFaceName
 import com.alagunas.highestcard.R
 
 @Composable
-fun CardItem(card: CardUI?) {
+fun CardItem(modifier: Modifier = Modifier, card: CardUI?) {
     card?.let {
         Card(
-            modifier = Modifier
+            modifier = modifier
                 .width(120.dp)
                 .height(150.dp),
             border = BorderStroke(1.dp, color = Color.Black),
@@ -88,11 +88,11 @@ fun CardItem(card: CardUI?) {
 @Composable
 @Preview
 fun CardPreview() {
-    CardItem(CardUI(CardFaceName.QUEEN.name, R.drawable.spades))
+    CardItem(modifier = Modifier, CardUI(CardFaceName.QUEEN.name, R.drawable.spades))
 }
 
 @Composable
 @Preview
 fun PilePreview() {
-    CardItem(null)
+    CardItem(modifier = Modifier, null)
 }

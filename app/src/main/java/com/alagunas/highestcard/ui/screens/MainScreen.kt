@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,13 +33,14 @@ fun MainScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = colorResource(id = R.color.white_gray))
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(align = Alignment.CenterHorizontally)
                     .padding(50.dp),
-                horizontalAlignment = Alignment . CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = stringResource(id = R.string.app_name),
@@ -46,7 +48,7 @@ fun MainScreen(
                     color = colorResource(id = R.color.black)
                 )
 
-                val painter = painterResource(id = R.drawable.war_of_suits)
+                val painter = painterResource(id = R.drawable.war_of_suits_transparent)
                 Image(
                     painter = painter,
                     contentDescription = stringResource(id = R.string.app_name),
