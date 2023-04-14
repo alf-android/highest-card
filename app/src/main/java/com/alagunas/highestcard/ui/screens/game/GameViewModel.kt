@@ -1,21 +1,22 @@
 package com.alagunas.highestcard.ui.screens.game
 
 import androidx.lifecycle.ViewModel
-import com.alagunas.domain.model.Card
+import com.alagunas.domain.model.CardSuit
 import com.alagunas.domain.model.Player
-import com.alagunas.highestcard.R
 import com.alagunas.highestcard.ui.items.CardUI
+import com.alagunas.highestcard.ui.items.getThumb
 import com.alagunas.highestcard.ui.items.toCardUI
-import com.alagunas.usecases.game.DealTopUseCase
-import com.alagunas.usecases.game.StartGameUseCase
-import com.alagunas.usecases.game.WinRoundUseCase
+import com.alagunas.usecases.game.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class GameViewModel(
     private val startGameUseCase: StartGameUseCase,
     private val winRoundUseCase: WinRoundUseCase,
-    private val dealTopUseCase: DealTopUseCase
+    private val dealTopUseCase: DealTopUseCase,
+    private val getSuitOrderUseCase: GetSuitOrderUseCase,
+    private val getRoundWinnerUseCase: GetRoundWinnerUseCase,
+    private val getGameWinnerUseCase: GameWinnerUseCase
 ) : ViewModel() {
 
     private val TAG = GameViewModel::class.java.simpleName
@@ -31,19 +32,17 @@ class GameViewModel(
     private val _showCardPlayerB: MutableStateFlow<CardUI?> = MutableStateFlow(null)
     val showCardPlayerB = _showCardPlayerB.asStateFlow()
 
-    private val _showWinsPlayerA: MutableStateFlow<Int> = MutableStateFlow(0)
-    val showWinsPlayerA = _showWinsPlayerA.asStateFlow()
-    private val _showWinsPlayerB: MutableStateFlow<Int> = MutableStateFlow(0)
-    val showWinsPlayerB = _showWinsPlayerB.asStateFlow()
+    private val _showDiscardPilePlayerA: MutableStateFlow<Int> = MutableStateFlow(0)
+    val showDiscardPilePlayerA = _showDiscardPilePlayerA.asStateFlow()
+    private val _showDiscardPilePlayerB: MutableStateFlow<Int> = MutableStateFlow(0)
+    val showDiscardPilePlayerB = _showDiscardPilePlayerB.asStateFlow()
 
-    private val _showSuitsOrder: MutableStateFlow<List<Int>> = MutableStateFlow(
-        listOf()
-    )
+    private val _showSuitsOrder: MutableStateFlow<List<Int>> = MutableStateFlow(listOf())
     val showSuitsOrder = _showSuitsOrder.asStateFlow()
 
-
-    private var playerA: Player? = null
-    private var playerB: Player? = null
+    private var playerA = Player()
+    private var playerB = Player()
+    private var suitsOrder = listOf<CardSuit>()
 
     init {
         startGame()
@@ -53,14 +52,9 @@ class GameViewModel(
         val players = startGameUseCase(Unit)
         playerA = players[0]
         playerB = players[1]
-        _showPilePlayerA.value = playerA?.pile?.size
-        _showPilePlayerB.value = playerB?.pile?.size
-        _showSuitsOrder.value = listOf(
-            R.drawable.spades,
-            R.drawable.hearts,
-            R.drawable.clubs,
-            R.drawable.diamonds
-        )
+        _showPilePlayerA.value = playerA.pile.size
+        _showPilePlayerB.value = playerB.pile.size
+        _showSuitsOrder.value = getSuitsOrderResource()
     }
 
     fun resetGame() {
@@ -68,35 +62,53 @@ class GameViewModel(
         _showCardPlayerB.value = null
         _showPilePlayerA.value = null
         _showPilePlayerB.value = null
-        _showWinsPlayerA.value = 0
-        _showWinsPlayerB.value = 0
+        _showDiscardPilePlayerA.value = 0
+        _showDiscardPilePlayerB.value = 0
+        _showSuitsOrder.value = listOf()
 
         startGame()
     }
 
+    private fun getSuitsOrderResource(): List<Int> {
+        val suitsDrawable = mutableListOf<Int>()
+        suitsOrder = getSuitOrderUseCase(Unit)
+        suitsOrder.forEach {
+            suitsDrawable.add(it.getThumb())
+        }
+        return suitsDrawable
+    }
+
     fun nextRound() {
-        if (playerA != null && playerB != null) {
-            if (playerA!!.pile.isNotEmpty() && playerB!!.pile.isNotEmpty()) {
-                val dealedCardA = dealTopUseCase(playerA!!)
-                val dealedCardB = dealTopUseCase(playerB!!)
+        if (playerA.pile.isNotEmpty() && playerB.pile.isNotEmpty()) {
+            val playerAndDealedCardA = dealTopUseCase(playerA)
+            val playerAndDealedCardB = dealTopUseCase(playerB)
+            playerA = playerAndDealedCardA.first
+            playerB = playerAndDealedCardB.first
+            val dealedCardA = playerAndDealedCardA.second
+            val dealedCardB = playerAndDealedCardB.second
 
-                _showCardPlayerA.value = dealedCardA.toCardUI()
-                _showCardPlayerB.value = dealedCardB.toCardUI()
-                _showPilePlayerA.value = playerA!!.pile.size
-                _showPilePlayerB.value = playerB!!.pile.size
+            _showCardPlayerA.value = dealedCardA.toCardUI()
+            _showCardPlayerB.value = dealedCardB.toCardUI()
+            _showPilePlayerA.value = playerA.pile.size
+            _showPilePlayerB.value = playerB.pile.size
 
-                if (isPlayerAWinner(dealedCardA, dealedCardB)) {
-                    winRoundUseCase(playerA!!, listOf(dealedCardA, dealedCardB))
-                    _showWinsPlayerA.value = showWinsPlayerA.value + 1
-                } else {
-                    winRoundUseCase(playerB!!, listOf(dealedCardA, dealedCardB))
-                    _showWinsPlayerB.value = showWinsPlayerB.value + 1
+            val winnerCard = getRoundWinnerUseCase(suitsOrder, Pair(dealedCardA, dealedCardB))
+            winnerCard?.let {
+                if (it.faceName.value == dealedCardA.faceName.value && it.suit == dealedCardA.suit) {
+                    playerA = winRoundUseCase(playerA)
+                    _showDiscardPilePlayerA.value = playerA.discardPile
+                } else if (it.faceName.value == dealedCardB.faceName.value && it.suit == dealedCardB.suit) {
+                    playerB = winRoundUseCase(playerB)
+                    _showDiscardPilePlayerB.value = playerB.discardPile
                 }
             }
         }
     }
 
-    //TODO: check value of suits in case of draw
-    private fun isPlayerAWinner(cardPlayerA: Card, cardPlayerB: Card) =
-        cardPlayerA.faceName.value > cardPlayerB.faceName.value
+    //TODO SHOW WINNER!
+    fun getWinner() {
+        //Player A, Player B or draw (null)
+        val winnerPlayer = getGameWinnerUseCase(Pair(playerA, playerB))
+
+    }
 }
