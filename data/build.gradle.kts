@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -36,6 +37,11 @@ dependencies {
 
     implementation(project(":domain"))
     implementation(project(":common"))
+
+    implementation("androidx.room:room-runtime:${rootProject.extra["roomVersion"]}")
+    annotationProcessor("androidx.room:room-compiler:${rootProject.extra["roomVersion"]}")
+    kapt("androidx.room:room-compiler:${rootProject.extra["roomVersion"]}")
+    implementation("androidx.room:room-ktx:${rootProject.extra["roomVersion"]}")
 
     testImplementation("junit:junit:${rootProject.extra["junitVersion"]}")
     androidTestImplementation("androidx.test.ext:junit:${rootProject.extra["testJunitVersion"]}")
