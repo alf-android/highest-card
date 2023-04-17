@@ -1,6 +1,7 @@
 package com.alagunas.usecases.di
 
 import com.alagunas.usecases.game.*
+import com.alagunas.usecases.game.getroundwinner.GetRoundWinnerUseCase
 import org.koin.dsl.module
 
 val useCasesModule = module {

@@ -7,6 +7,8 @@ import com.alagunas.highestcard.ui.items.CardUI
 import com.alagunas.highestcard.ui.items.getThumb
 import com.alagunas.highestcard.ui.items.toCardUI
 import com.alagunas.usecases.game.*
+import com.alagunas.usecases.game.getroundwinner.BodyGetRoundWinner
+import com.alagunas.usecases.game.getroundwinner.GetRoundWinnerUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -99,27 +101,30 @@ class GameViewModel(
             val dealedCardA = playerAndDealedCardA.second
             val dealedCardB = playerAndDealedCardB.second
 
-            _showCardPlayerA.value = dealedCardA.toCardUI()
-            _showCardPlayerB.value = dealedCardB.toCardUI()
+            _showCardPlayerA.value = dealedCardA?.toCardUI()
+            _showCardPlayerB.value = dealedCardB?.toCardUI()
             _showPilePlayerA.value = playerA.pile.size
             _showPilePlayerB.value = playerB.pile.size
 
             _showWinRoundPlayerA.value = null
             _showWinRoundPlayerB.value = null
-            val winnerCard = getRoundWinnerUseCase(suitsOrder, Pair(dealedCardA, dealedCardB))
-            winnerCard?.let {
-                if (it.faceName.value == dealedCardA.faceName.value && it.suit == dealedCardA.suit) {
-                    playerA = winRoundUseCase(playerA)
-                    _showDiscardPilePlayerA.value = playerA.discardPile
-                    _showWinRoundPlayerA.value = true
-                    _showWinRoundPlayerB.value = false
-                } else if (it.faceName.value == dealedCardB.faceName.value && it.suit == dealedCardB.suit) {
-                    playerB = winRoundUseCase(playerB)
-                    _showDiscardPilePlayerB.value = playerB.discardPile
-                    _showWinRoundPlayerA.value = false
-                    _showWinRoundPlayerB.value = true
+            if (dealedCardA != null && dealedCardB != null) {
+                val winnerCard = getRoundWinnerUseCase(BodyGetRoundWinner(suitsOrder, Pair(dealedCardA, dealedCardB)))
+                winnerCard?.let {
+                    if (it.faceName.value == dealedCardA.faceName.value && it.suit == dealedCardA.suit) {
+                        playerA = winRoundUseCase(playerA)
+                        _showDiscardPilePlayerA.value = playerA.discardPile
+                        _showWinRoundPlayerA.value = true
+                        _showWinRoundPlayerB.value = false
+                    } else if (it.faceName.value == dealedCardB.faceName.value && it.suit == dealedCardB.suit) {
+                        playerB = winRoundUseCase(playerB)
+                        _showDiscardPilePlayerB.value = playerB.discardPile
+                        _showWinRoundPlayerA.value = false
+                        _showWinRoundPlayerB.value = true
+                    }
                 }
             }
+
 
             //Check if the game is finished
             if (showPilePlayerA.value == 0 && showPilePlayerB.value == 0) {

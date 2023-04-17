@@ -21,6 +21,7 @@ buildscript {
         //DI
         set("koinVersion", "3.2.0")
         //Test
+        set("mockkVersion", "1.12.4")
         set("junitVersion", "4.13.2")
         set("testJunitVersion", "1.1.5")
         set("testEspressoVersion", "3.5.1")
