@@ -125,7 +125,6 @@ class GameViewModel(
                 }
             }
 
-
             //Check if the game is finished
             if (showPilePlayerA.value == 0 && showPilePlayerB.value == 0) {
                 getWinner()
