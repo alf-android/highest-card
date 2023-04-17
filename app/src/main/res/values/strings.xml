@@ -1,10 +1,14 @@
 <resources>
-    <string name="app_name">HighestCard</string>
+    <string name="app_name">War of suits</string>
     <string name="play">PLAY!</string>
     <string name="historial">HISTORIAL</string>
     <string name="reset_game">Reset Game</string>
     <string name="next_round">Next Round</string>
-    <string name="winner">WINNER!</string>
-    <string name="win">WIN!</string>
-    <string name="lose">LOSE!</string>
+    <string name="professor_x">Professor X</string>
+    <string name="magneto">Magneto</string>
+    <string name="discard_pile">Discard Pile:</string>
+    <string name="n_cards">%d cards</string>
+    <string name="winner_x">WINNER %1$s!</string>
+    <string name="draw">DRAW!</string>
+    <string name="suits_order">Suits order:</string>
 </resources>

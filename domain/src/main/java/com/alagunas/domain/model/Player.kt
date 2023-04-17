@@ -1,19 +1,10 @@
 package com.alagunas.domain.model
 
+import java.util.*
+
 data class Player(
-    private var pile: List<Card>,
-    val wastePile: MutableList<Card> = mutableListOf(),
-    val wins: Int = 0,
-    val winner: Boolean = false
-) {
-
-    fun getPileSize(): Int {
-        return pile.size
-    }
-
-    fun dealTop(): Card {
-        val dealedCard = pile.last()
-        pile = pile.take(pile.size - 1)
-        return dealedCard
-    }
-}
+    val id: String = UUID.randomUUID().toString(),
+    val pile: List<Card> = listOf(),
+    val discardPile: Int = 0,
+    val wins: Int = 0
+)
