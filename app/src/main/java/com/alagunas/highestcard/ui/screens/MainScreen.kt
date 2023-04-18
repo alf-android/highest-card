@@ -60,7 +60,7 @@ fun MainScreen(
                 }
 
                 MainButtonWithBorder(text = stringResource(id = R.string.history)) {
-                    /*TODO*/
+                    navController.navigate(route = "history")
                 }
             }
         }
