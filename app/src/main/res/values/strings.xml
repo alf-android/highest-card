@@ -11,4 +11,5 @@
     <string name="winner_x">WINNER %1$s!</string>
     <string name="draw">DRAW!</string>
     <string name="suits_order">Suits order:</string>
+    <string name="not_games_found">Not games found.</string>
 </resources>
