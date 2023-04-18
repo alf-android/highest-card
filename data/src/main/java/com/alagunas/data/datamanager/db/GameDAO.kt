@@ -19,6 +19,6 @@ interface GameDAO {
     @Delete
     suspend fun delete(game: GameEntity)
 
-    @Delete
+    @Query("DELETE FROM games")
     suspend fun deleteAll()
 }
