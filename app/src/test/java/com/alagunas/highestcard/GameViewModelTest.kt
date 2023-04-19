@@ -1,5 +1,6 @@
 package com.alagunas.highestcard
 
+import com.alagunas.data.repositories.GameRepository
 import com.alagunas.domain.model.Card
 import com.alagunas.domain.model.CardFaceName
 import com.alagunas.domain.model.CardSuit
@@ -31,6 +32,7 @@ class GameViewModelTest {
     private val getSuitOrderUseCase: GetSuitOrderUseCase = mockk(relaxed = true)
     private val getRoundWinnerUseCase: GetRoundWinnerUseCase = mockk(relaxed = true)
     private val getGameWinnerUseCase: GameWinnerUseCase = mockk(relaxed = true)
+    private val gameRepository: GameRepository = mockk(relaxed = true)
 
     @ExperimentalCoroutinesApi
     private val testDispatcher = StandardTestDispatcher()
@@ -107,7 +109,8 @@ class GameViewModelTest {
                 dealTopUseCase,
                 getSuitOrderUseCase,
                 getRoundWinnerUseCase,
-                getGameWinnerUseCase
+                getGameWinnerUseCase,
+                gameRepository
             )
 
             assertEquals(4, viewModel.showSuitsOrder.value.size)
@@ -150,7 +153,8 @@ class GameViewModelTest {
                 dealTopUseCase,
                 getSuitOrderUseCase,
                 getRoundWinnerUseCase,
-                getGameWinnerUseCase
+                getGameWinnerUseCase,
+                gameRepository
             )
 
             viewModel.nextRound()
@@ -201,7 +205,8 @@ class GameViewModelTest {
                 dealTopUseCase,
                 getSuitOrderUseCase,
                 getRoundWinnerUseCase,
-                getGameWinnerUseCase
+                getGameWinnerUseCase,
+                gameRepository
             )
 
             viewModel.resetGame()
@@ -247,7 +252,8 @@ class GameViewModelTest {
                 dealTopUseCase,
                 getSuitOrderUseCase,
                 getRoundWinnerUseCase,
-                getGameWinnerUseCase
+                getGameWinnerUseCase,
+                gameRepository
             )
 
             viewModel.nextRound()
