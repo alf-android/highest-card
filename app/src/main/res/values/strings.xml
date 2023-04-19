@@ -12,4 +12,7 @@
     <string name="draw">DRAW!</string>
     <string name="suits_order">Suits order:</string>
     <string name="not_games_found">Not games found.</string>
+    <string name="n_wins">%d wins!</string>
+    <string name="win_professorx">WIN PROFESSOR X</string>
+    <string name="win_magneto">WIN MAGNETO</string>
 </resources>

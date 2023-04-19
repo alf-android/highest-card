@@ -17,7 +17,7 @@ fun ButtonInGameItem(text: String, action: () -> Unit) {
         colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.black)),
         shape = buttonShape
     ) {
-        Text(text = text)
+        Text(text = text, color = colorResource(id = R.color.white))
     }
 }
 

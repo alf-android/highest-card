@@ -44,6 +44,7 @@ fun CardItem(modifier: Modifier = Modifier, card: CardUI?) {
                 ) {
                     Text(
                         text = it.faceName,
+                        color = colorResource(id = R.color.black),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.align(Alignment.CenterHorizontally)

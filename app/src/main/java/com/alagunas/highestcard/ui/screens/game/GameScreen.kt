@@ -104,7 +104,7 @@ fun GameScreen(
 fun SuitsOrderItem(modifier: Modifier, suitsOrder: List<Int>) {
     Row(
         modifier = modifier
-            .padding(top = 10.dp, bottom = 10.dp, start = 20.dp, end = 20.dp)
+            .padding(bottom = 10.dp, start = 20.dp, end = 20.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
