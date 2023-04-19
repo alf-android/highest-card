@@ -1,6 +1,8 @@
 package com.alagunas.highestcard.ui.screens.game
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.alagunas.data.repositories.GameRepository
 import com.alagunas.domain.model.CardSuit
 import com.alagunas.domain.model.Player
 import com.alagunas.highestcard.ui.items.CardUI
@@ -11,6 +13,7 @@ import com.alagunas.usecases.game.getroundwinner.BodyGetRoundWinner
 import com.alagunas.usecases.game.getroundwinner.GetRoundWinnerUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class GameViewModel(
     private val startGameUseCase: StartGameUseCase,
@@ -18,7 +21,8 @@ class GameViewModel(
     private val dealTopUseCase: DealTopUseCase,
     private val getSuitOrderUseCase: GetSuitOrderUseCase,
     private val getRoundWinnerUseCase: GetRoundWinnerUseCase,
-    private val getGameWinnerUseCase: GameWinnerUseCase
+    private val getGameWinnerUseCase: GameWinnerUseCase,
+    private val gameRepository: GameRepository
 ) : ViewModel() {
 
     private val TAG = GameViewModel::class.java.simpleName
@@ -128,6 +132,7 @@ class GameViewModel(
             //Check if the game is finished
             if (showPilePlayerA.value == 0 && showPilePlayerB.value == 0) {
                 getWinner()
+                saveGame()
                 _showNextRound.value = false
             }
         }
@@ -145,6 +150,12 @@ class GameViewModel(
             playerA.id -> 1
             playerB.id -> 2
             else -> 0
+        }
+    }
+
+    private fun saveGame() {
+        viewModelScope.launch {
+            gameRepository.setGame(Pair(playerA, playerB))
         }
     }
 }
