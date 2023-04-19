@@ -7,6 +7,6 @@ import org.koin.dsl.module
 
 val uiModule = module {
 
-    viewModel { GameViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { GameViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { HistoryViewModel(get()) }
 }
