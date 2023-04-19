@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.alagunas.highestcard.ui.screens.game.GameScreen
 import com.alagunas.highestcard.ui.screens.MainScreen
+import com.alagunas.highestcard.ui.screens.history.HistoryScreen
 import com.alagunas.highestcard.ui.theme.HighestCardTheme
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +49,9 @@ fun HighestCardNavHost(navController: NavHostController) {
         }
         composable(route = "newgame") {
             GameScreen()
+        }
+        composable(route = "history") {
+            HistoryScreen()
         }
     }
 }

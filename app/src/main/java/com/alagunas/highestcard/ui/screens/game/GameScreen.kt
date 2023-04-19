@@ -12,12 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import buttonShape
-import com.alagunas.domain.model.CardFaceName
 import com.alagunas.highestcard.R
 import com.alagunas.highestcard.ui.items.*
 import org.koin.androidx.compose.getViewModel

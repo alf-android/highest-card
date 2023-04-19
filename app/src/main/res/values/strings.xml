@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">War of suits</string>
     <string name="play">PLAY!</string>
-    <string name="historial">HISTORIAL</string>
+    <string name="history">HISTORY</string>
     <string name="reset_game">Reset Game</string>
     <string name="next_round">Next Round</string>
     <string name="professor_x">Professor X</string>
@@ -11,4 +11,5 @@
     <string name="winner_x">WINNER %1$s!</string>
     <string name="draw">DRAW!</string>
     <string name="suits_order">Suits order:</string>
+    <string name="not_games_found">Not games found.</string>
 </resources>
