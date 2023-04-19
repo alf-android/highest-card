@@ -54,11 +54,11 @@ android {
 
 dependencies {
 
-    /*implementation(project(":usecases"))
+    implementation(project(":usecases"))
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":common"))
-*/
+
     implementation("androidx.compose.material3:material3:${rootProject.extra["composeMaterial3Version"]}")
 //    implementation("androidx.compose.material3:material3-window-size-class:1.0.1")
     implementation("androidx.compose.material:material:${rootProject.extra["composeMaterialVersion"]}")
@@ -75,6 +75,9 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:${rootProject.extra["navigationVersion"]}")
     implementation("androidx.navigation:navigation-fragment-ktx:${rootProject.extra["navigationVersion"]}")
     implementation("androidx.navigation:navigation-ui-ktx:${rootProject.extra["navigationVersion"]}")
+
+    testImplementation("io.mockk:mockk:${rootProject.extra["mockkVersion"]}")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${rootProject.extra["coroutinesTestVersion"]}")
 
     testImplementation("junit:junit:${rootProject.extra["junitVersion"]}")
     androidTestImplementation("androidx.test.ext:junit:${rootProject.extra["testJunitVersion"]}")
